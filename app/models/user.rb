@@ -39,7 +39,7 @@ module StripePush
     def notify_charge(charge)
       amount = "$%.2f" % (charge.amount / 100)
       alert  = "Paid #{amount}"
-      alert += ": #{charge.description}" if charge.description
+      alert += " - #{charge.description}" if charge.description
 
       custom = {
         amount:      charge.amount,
