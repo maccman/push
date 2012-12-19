@@ -31,12 +31,15 @@ module StripePush
     end
 
     def notify(options = {})
-      self.device_tokens.each {|id| self.class.notify(id, options) }
+      self.device_tokens.each do |id|
+        self.class.notify(id, options)
+      end
     end
 
     def notify_charge(charge)
       amount = "$%.2f" % (charge.amount / 100)
-      alert  = "Paid #{amount} for #{charge.description}"
+      alert  = "Paid #{amount}"
+      alert += ":#{charge.description}" if charge.description
 
       custom = {
         amount:      charge.amount,
