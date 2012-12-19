@@ -45,7 +45,7 @@ configure do
     provider :stripe_platform,
              settings.client_id,
              settings.secret_key,
-             :scope => 'read_only'
+             :scope => 'read_write'
   end
 end
 
