@@ -70,12 +70,13 @@ get '/auth/complete' do
 end
 
 post '/webhook' do
-  data  = JSON.parse(request.body.read, :symbolize_names => true)
-  event = Stripe::Event.retrieve(data[:id], settings.secret_key)
+  data = JSON.parse(request.body.read, :symbolize_names => true)
+  user = User.find_by_uid(data[:user_id])
+
+  event = Stripe::Event.retrieve(data[:id], user.secret_key)
 
   return unless event.type == 'charge.succeeded'
 
-  user = User.find_by_uid(event.user_id)
   user && user.notify_charge(event.data.object)
 
   200
