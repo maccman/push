@@ -35,8 +35,15 @@ module StripePush
     end
 
     def notify_charge(charge)
-      custom = {amount: charge.amount, description: charge.description}
-      notify(alert: 'New charge!', custom: custom)
+      amount = "$%.2f" % (charge.amount / 100)
+      alert  = "Paid #{amount} for #{charge.description}"
+
+      custom = {
+        amount:      charge.amount,
+        description: charge.description
+      }
+
+      notify(alert: alert, custom: custom)
     end
   end
 end
