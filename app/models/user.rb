@@ -17,7 +17,7 @@ module StripePush
     end
 
     def self.pusher
-      @pusher ||= Grocer.pusher(
+      Grocer.pusher(
         certificate: settings.certificate_path
       )
     end
