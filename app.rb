@@ -25,17 +25,27 @@ configure do
     'development' => {'uri' => 'mongodb://localhost:27017/stripepush-development'}
   }, settings.environment.to_s)
 
+  set :sessions,
+      :httponly     => true,
+      :secure       => production?,
+      :expire_after => false
+
+  set :show_exceptions, true
+
+  set :erb, :escape_html => true
   set :session_secret,   ENV['SESSION_SECRET']
   set :secret_key,       ENV['SECRET_KEY']
   set :publishable_key,  ENV['PUBLISHABLE_KEY']
   set :client_id,        ENV['CLIENT_ID']
+  set :protection, true
+
   set :certificate_path, "certs/#{settings.environment}.pem"
 
   use OmniAuth::Builder do
     provider :stripe_platform,
              settings.client_id,
              settings.secret_key,
-             :scope => 'read_write'
+             :scope => 'read_only'
   end
 end
 
