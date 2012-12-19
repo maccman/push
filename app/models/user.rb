@@ -34,7 +34,7 @@ module StripePush
     end
 
     def notify_charge(charge)
-      custom = {amount: charge.amount, description: description}
+      custom = {amount: charge.amount, description: charge.description}
       notify(alert: 'New charge!', custom: custom)
     end
   end
