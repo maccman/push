@@ -18,7 +18,8 @@ module StripePush
 
     def self.pusher
       Grocer.pusher(
-        certificate: settings.certificate_path
+        certificate: settings.certificate_path,
+        gateway:     Grocer::PushConnection::SANDBOX_GATEWAY # TODO
       )
     end
 
