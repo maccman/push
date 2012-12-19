@@ -7,7 +7,7 @@ module StripePush
     key :secret_key, String, :required => true
     key :device_ids, Array, :default => []
 
-    def self.from_auth!(auth, device_token)
+    def self.from_auth!(auth)
       user                 = find_by_uid(auth['uid']) || self.new
       user.uid             = auth['uid']
       user.secret_key      = auth['credentials']['token']
