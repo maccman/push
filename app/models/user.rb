@@ -5,7 +5,7 @@ module StripePush
     key :uid, String, :required => true
     key :publishable_key, String, :required => true
     key :secret_key, String, :required => true
-    key :device_ids, Array, :default => []
+    key :device_tokens, Array, :default => []
 
     def self.from_auth!(auth)
       user                 = find_by_uid(auth['uid']) || self.new
@@ -30,7 +30,7 @@ module StripePush
     end
 
     def notify(options = {})
-      self.device_ids.each {|id| self.class.notify(id, options) }
+      self.device_tokens.each {|id| self.class.notify(id, options) }
     end
 
     def notify_charge(charge)

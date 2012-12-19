@@ -50,15 +50,15 @@ configure do
 end
 
 get '/auth' do
-  session[:device_id] = params[:device_id]
+  session[:device_token] = params[:device_token]
   redirect '/auth/stripe_platform'
 end
 
 get '/auth/stripe_platform/callback' do
   user = User.from_auth!(request.env['omniauth.auth'])
 
-  if session[:device_id]
-    user.device_ids |= [session[:device_id]]
+  if session[:device_token]
+    user.device_tokens |= [session[:device_token]]
     user.save!
   end
 
