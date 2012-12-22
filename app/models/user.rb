@@ -120,7 +120,7 @@ module StripePush
       alert  = "Paid #{amount}"
 
       custom = {
-        amount amount,
+        amount: amount,
         batch: true
       }
 
