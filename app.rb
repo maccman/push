@@ -28,7 +28,7 @@ configure do
   set :sessions,
       :httponly     => true,
       :secure       => production?,
-      :expire_after => 2.years.from_now
+      :expire_after => 2.years.to_i
 
   set :show_exceptions, true
 
