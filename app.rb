@@ -28,7 +28,7 @@ configure do
   set :sessions,
       :httponly     => true,
       :secure       => production?,
-      :expire_after => false
+      :expire_after => 2.years.from_now
 
   set :show_exceptions, true
 
@@ -53,7 +53,7 @@ configure do
     condition do
       unless current_user?
         session[:back] = request.url if request.get?
-        redirect '/login', 303
+        halt 401
       end
     end
   end
