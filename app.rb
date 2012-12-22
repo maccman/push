@@ -48,6 +48,32 @@ configure do
              settings.secret_key,
              :scope => 'read_write'
   end
+
+  set(:auth) do |*roles|
+    condition do
+      unless current_user?
+        session[:back] = request.url if request.get?
+        redirect '/login', 303
+      end
+    end
+  end
+end
+
+helpers do
+  def current_user=(user)
+    session[:user_id] = user && user.id
+  end
+
+  def current_user
+    @current_user ||= begin
+      user_id = session[:user_id]
+      user_id && User.find(user_id)
+    end
+  end
+
+  def current_user?
+    !!session[:user_id]
+  end
 end
 
 get '/auth' do
@@ -56,18 +82,26 @@ get '/auth' do
 end
 
 get '/auth/stripe_platform/callback' do
-  user = User.from_auth!(request.env['omniauth.auth'])
+  self.current_user = User.from_auth!(request.env['omniauth.auth'])
 
   if session[:device_token]
-    user.device_tokens |= [session[:device_token]]
-    user.save!
+    self.current_user.add_token!(session[:device_token])
   end
 
   redirect '/auth/complete'
 end
 
-get '/auth/complete' do
+get '/auth/complete', :auth => :user do
   200
+end
+
+get '/user', :auth => :user, :provides => :json do
+  current_user.to_json
+end
+
+put '/user', :auth => :user, :provides => :json do
+  current_user.update_attributes!(params)
+  current_user.to_json
 end
 
 post '/webhook' do
@@ -75,10 +109,7 @@ post '/webhook' do
   user = User.find_by_uid(data[:user_id])
 
   event = Stripe::Event.retrieve(data[:id], user.secret_key)
-
-  return unless event.type == 'charge.succeeded'
-
-  user && user.notify_charge(event.data.object)
+  user && user.notify_event!(event)
 
   200
 end
