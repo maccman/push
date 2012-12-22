@@ -26,8 +26,8 @@ configure do
   }, settings.environment.to_s)
 
   set :sessions,
-      :httponly     => true,
-      :secure       => production?,
+      :httponly     => false,
+      :secure       => false,
       :expire_after => 2.years.to_i
 
   set :show_exceptions, true
@@ -37,7 +37,7 @@ configure do
   set :secret_key,       ENV['SECRET_KEY']
   set :publishable_key,  ENV['PUBLISHABLE_KEY']
   set :client_id,        ENV['CLIENT_ID']
-  set :protection, true
+  set :protection, false
 
   # set :certificate_path, "certs/#{settings.environment}.pem"
   set :certificate_path, "certs/development.pem" # TODO
