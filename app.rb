@@ -95,6 +95,15 @@ get '/auth/complete', :auth => :user do
   200
 end
 
+delete '/auth', :auth => :user do
+  if token = params[:device_token]
+    current_user.remove_token!(token)
+  end
+
+  session.clear
+  200
+end
+
 get '/user', :auth => :user, :provides => :json do
   current_user.to_json
 end

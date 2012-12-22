@@ -57,6 +57,11 @@ module StripePush
       self.save!
     end
 
+    def remove_token!(token)
+      self.device_tokens -= [token]
+      self.save!
+    end
+
     def as_json(options = {})
       {
         uid:                    uid,
