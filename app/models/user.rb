@@ -45,9 +45,9 @@ module StripePush
 
     def notify_event!(event)
       case event.type
-      when 'charge'
+      when 'charge.succeeded'
         notify_charge(event.data.object)
-      when 'transfer'
+      when 'transfer.created', 'transfer.updated'
         notify_transfer(event.data.object)
       end
     end
