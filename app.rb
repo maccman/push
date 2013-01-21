@@ -43,7 +43,7 @@ configure do
     provider :stripe_platform,
              settings.client_id,
              settings.secret_key,
-             :scope => 'read_write'
+             :scope => 'read_only'
   end
 
   set(:auth) do |*roles|
