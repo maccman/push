@@ -95,10 +95,10 @@ module StripePush
         notify_single_charge(charge)
 
       else
-        # Notify every x amount
+        # Notify every n amount
         self.charge_amount += charge.amount
 
-        if self.charge_amount > self.charge_notifications
+        if self.charge_amount >= self.charge_notifications
           notify_batch_charges(self.charge_amount)
           self.charge_amount = 0
         end
