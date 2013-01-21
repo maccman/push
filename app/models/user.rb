@@ -24,10 +24,7 @@ module StripePush
     end
 
     def self.pusher
-      Grocer.pusher(
-        certificate: settings.certificate_path,
-        gateway:     Grocer::PushConnection::SANDBOX_GATEWAY # TODO
-      )
+      Grocer.pusher(certificate: settings.certificate_path)
     end
 
     def self.notify(token, options = {})
