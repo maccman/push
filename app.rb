@@ -11,8 +11,6 @@ require 'active_support/time'
 require 'active_support/core_ext/string'
 require 'active_support/json'
 
-# config_file 'config.yml'
-
 module StripePush
   autoload :User, 'app/models/user'
 end
