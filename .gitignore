@@ -1,2 +1,4 @@
 .DS_Store
 .env
+certs
+certs_ios

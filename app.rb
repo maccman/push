@@ -39,8 +39,7 @@ configure do
   set :client_id,        ENV['CLIENT_ID']
   set :protection, false
 
-  # set :certificate_path, "certs/#{settings.environment}.pem"
-  set :certificate_path, "certs/development.pem" # TODO
+  set :certificate_path, "certs/#{settings.environment}.pem"
 
   use OmniAuth::Builder do
     provider :stripe_platform,
