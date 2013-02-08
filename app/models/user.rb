@@ -111,7 +111,7 @@ module StripePush
 
       custom = {
         amount:      charge.amount,
-        description: charge.description
+        description: charge.description || ''
       }
 
       notify(alert: alert, custom: custom)
@@ -131,14 +131,13 @@ module StripePush
 
     def notify_transfer(transfer)
       return unless transfer_notifications_enabled?
-      return unless transfer.status == 'paid'
 
       amount = "$%.2f" % (transfer.amount / 100)
       alert  = "We transferred #{amount} into your bank account"
 
       custom = {
         amount:      transfer.amount,
-        description: transfer.description
+        description: transfer.description || ''
       }
 
       notify(alert: alert, custom: custom)
