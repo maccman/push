@@ -108,6 +108,7 @@ module StripePush
       amount = "$%.2f" % (charge.amount / 100)
       alert  = "Paid #{amount}"
       alert += " - #{charge.description}" if charge.description
+      alert += "."
 
       custom = {
         amount:      charge.amount,
@@ -133,7 +134,7 @@ module StripePush
       return unless transfer_notifications_enabled?
 
       amount = "$%.2f" % (transfer.amount / 100)
-      alert  = "We transferred #{amount} into your bank account"
+      alert  = "#{amount} is being transferred into your bank account."
 
       custom = {
         amount:      transfer.amount,
