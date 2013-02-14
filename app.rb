@@ -83,6 +83,7 @@ get '/auth/stripe_platform/callback' do
 
   if session[:device_token]
     self.current_user.add_token!(session[:device_token])
+    self.current_user.alert('Setup complete.')
   end
 
   redirect '/auth/complete'

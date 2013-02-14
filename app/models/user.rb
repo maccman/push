@@ -59,6 +59,10 @@ module StripePush
       self.save!
     end
 
+    def alert(msg)
+      notify(alert: msg)
+    end
+
     def as_json(options = {})
       {
         uid:                    uid,
