@@ -12,7 +12,7 @@ namespace :user do
 
       puts "Removing token from #{user.email}: #{attempt.device_token}"
 
-      if ARGS['NOOP']
+      if ENV['NOOP']
         print ' (NOOP)'
       else
         user.remove_token!(attempt.device_token)
