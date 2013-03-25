@@ -27,6 +27,8 @@ GEM
     jwt (0.1.5)
       multi_json (>= 1.0)
     mime-types (1.19)
+    money (5.1.1)
+      i18n (~> 0.6.0)
     mongo (1.8.0)
       bson (~> 1.8.0)
     mongo_mapper (0.12.0)
@@ -87,6 +89,7 @@ DEPENDENCIES
   bson_ext
   erubis
   grocer
+  money
   mongo_mapper
   omniauth
   omniauth-stripe-platform

@@ -100,7 +100,7 @@ module StripePush
         self.charge_amount += charge.amount
 
         if self.charge_amount >= self.charge_notifications
-          notify_batch_charges(self.charge_amount)
+          notify_batch_charges(self.charge_amount, charge.currency)
           self.charge_amount = 0
         end
 
@@ -109,8 +109,9 @@ module StripePush
     end
 
     def notify_single_charge(charge)
-      amount = "$%.2f" % (charge.amount / 100)
-      alert  = "Paid #{amount}"
+      money = Money.new(charge.amount, charge.currency)
+
+      alert  = "Paid #{money.symbol}#{money.to_s}"
       alert += " - #{charge.description}" if charge.description
       alert += "."
 
@@ -122,9 +123,9 @@ module StripePush
       notify(alert: alert, custom: custom)
     end
 
-    def notify_batch_charges(amount)
-      amount = "$%.2f" % (amount / 100)
-      alert  = "Paid #{amount}"
+    def notify_batch_charges(amount, currency)
+      money  = Money.new(amount, currency)
+      alert  = "Paid #{money.symbol}#{money.to_s}."
 
       custom = {
         amount: amount,
@@ -137,8 +138,8 @@ module StripePush
     def notify_transfer(transfer)
       return unless transfer_notifications_enabled?
 
-      amount = "$%.2f" % (transfer.amount / 100)
-      alert  = "#{amount} is being transferred into your bank account."
+      money = Money.new(transfer.amount, transfer.currency)
+      alert = "#{money.symbol}#{money.to_s} is being transferred into your bank account."
 
       custom = {
         amount:      transfer.amount,
