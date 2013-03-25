@@ -1,6 +1,6 @@
 require './app'
 
-namespace :user
+namespace :user do
   task :remove_inactive do
     feedback = Grocer.feedback(
       certificate: settings.certificate_path
