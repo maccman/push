@@ -111,12 +111,16 @@ put '/user', :auth => :user, :provides => :json do
   current_user.to_json
 end
 
-post '/webhook' do
+post '/v2/webhook' do
   data = JSON.parse(request.body.read, :symbolize_names => true)
   user = User.find_by_uid(data[:user_id])
 
   event = Stripe::Event.retrieve(data[:id], user.secret_key)
   user && user.notify_event!(event)
 
+  200
+end
+
+post '/webhook' do
   200
 end
